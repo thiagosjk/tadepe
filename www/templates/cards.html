@@ -1,0 +1,42 @@
+<ion-view title="Cards" class="school cards">
+    <ion-content>
+        <p class="header"><a ng-href="#/school/{{id}}"><i class="ion-android-arrow-back"></i>&nbsp;&nbsp;&nbsp;{{slug == 'inspection' ? 'SUAS VISTORIAS' : 'RESPOSTAS'}}</a></p>
+        <p class="schoolName">{{school.name}}</p>
+        <div class="holder">
+            <div ng-if="slug == 'inspection'" class="card" ng-repeat="i in school.inspections">
+                <a class="share" ng-click="share(1, school, i)"><i class="ion-android-share"></i></a>
+                <div class="item changePadding shareSize">
+                    <ng-include src="'templates/progress.html'"></ng-include>
+                </div>
+                <div class="item item-text-wrap" ng-if="i.delayed">
+                    <p class="card-text" ng-if="i.status[2].status == 0">{{i.text}}<br /><br><br></p>
+                    <p class="card-text" ng-if="i.status[2].status > 0">Seu alerta de {{i.created_at | amDateFormat: 'DD/MM/YY'}} foi avaliado e possui indícios de atraso, já encaminhamos para o governo.<br /><br><br></p>
+                    <p class="info smallText greenText"><i class="ion-android-alert" data-pack="default"></i> Não se preocupe, suas informações estão seguras.</p>
+                </div>
+                <div class="item item-text-wrap" ng-if="!i.delayed">
+                    <p class="card-text">Seu alerta de {{i.created_at | amDateFormat: 'DD/MM/YY'}} foi avaliado e não possui indícios de atraso. Continue de olho!<br /><br><br></p>
+                    <p class="info smallText greenText"><i class="ion-android-alert" data-pack="default"></i> Não se preocupe, suas informações estão seguras.</p>
+                </div>
+            </div>
+            <div ng-if="slug != 'inspection'" class="card reply" ng-repeat="reply in school.replies" data-title="{{translateInstance(reply.instance, true)}} {{translateInstance(reply.instance)}} respondeu!" data-text="{{reply.text}}" data-date="{{reply.deadline | deadline}}">
+                <a class="share" ng-click="share(2, school, null, reply)"><i class="ion-android-share"></i></a>
+                <div class="item">
+                    <div class="status answer">
+                        <p class="info checkmark-circled"><i class="ion-android-checkmark-circle" data-pack="default"></i> {{translateInstance(reply.instance, true)}} {{translateInstance(reply.instance)}} respondeu!</p>
+                    </div>
+                </div>
+                <div class="item item-text-wrap">
+                    <div class="date">
+                        <p class="big" ng-if="reply.deadline > -1">{{reply.deadline | deadline}}</p>
+                        <p class="small" ng-if="reply.deadline > -1">é a nova data informada</p>
+                        <p class="big" ng-if="reply.deadline == -1">OBRA PARALISADA</p>
+                        <p class="small" ng-if="reply.deadline == -1">&nbsp;</p>
+                    </div>
+                    <p class="card-text">{{reply.text | limitTo:130}}</p>
+                    <p class="info smallText greenText grayText"><i class="ion-android-alert" data-pack="default"></i> Resposta recebida em {{reply.replied_on | formatDate}}</p>
+                </div>
+            </div>
+        </div>
+        <p><br></p>
+    </ion-content>
+</ion-view>

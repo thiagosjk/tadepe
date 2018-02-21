@@ -1,0 +1,14 @@
+<ion-view title="Tutorial" class="tutorial">
+    <div ng-if="showTutorial">
+        <img src="img/patthern-top.svg" class="pattern-top" />
+        <ion-content>
+            <ion-slides class="slides" options="options" slider="data.slider">
+                <ion-slide-page ng-repeat="s in slides">
+                    <p>{{s}}</p>
+                    <img ng-if="$index==2" class="hand" src="img/tutorial-hand.png" />
+                </ion-slide-page>
+            </ion-slides>
+        </ion-content>
+        <a ng-if="firstAllowed" class="button button-full button-assertive footer-button" ng-click="goFoward()"><i class="ion-search" data-pack="default"></i> ESCOLAS PERTO DE MIM</a>
+    </div>
+</ion-view>

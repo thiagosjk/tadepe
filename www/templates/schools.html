@@ -1,0 +1,36 @@
+<ion-view title="Schools" class="schools">
+    <ion-content>
+        <ion-refresher pulling-text="Puxe para atualizar" on-refresh="updateSchools()">
+        </ion-refresher>
+        <ion-list>
+            <ion-item ng-if="headerMySchools" class="item item-complex headerSchools">
+                <p class="name">Obras vistoriadas por você</p>
+            </ion-item>
+            <ion-item ng-repeat="i in schools track by i.id" ng-if="i.inspections.length > 0" ng-href="#/school/{{i.id}}" class="item item-complex {{i.inspections.length > 0 ? 'photo' : ''}} {{i.bar ? 'headerSchools' : ''}}">
+                <div ng-if="i.evidence_photo" class="img {{i.evidence_photo ? '' : 'placeholder'}}" cache-src="{{i.evidence_photo}}" src-is="background" background-loading-style="url('img/loader.gif') no-repeat center">
+                    <i class="ion-camera"></i>
+                </div>
+                <div ng-if="!i.evidence_photo" class="img {{i.inspections[0].photos[0] ? '' : 'placeholder'}}" style="background: url({{i.inspections[0].photos[0].hash}})">
+                    <i class="ion-camera"></i>
+                </div>
+                <p class="name">{{i.name}}</p>
+                <p class="address">{{i.address}}</p>
+                <ng-include ng-if="i.inspections[0]" src="'templates/progress.html'"></ng-include>
+                <p ng-if="!i.address" class="address">&nbsp;</p>
+            </ion-item>
+            <ion-item class="item item-complex headerSchools">
+                <p class="name">Escolas por perto</p>
+            </ion-item>
+            <ion-item ng-if="!haveSchools" class="item item-complex">
+                <p class="name" style="padding: 16px;">Nao encontramos nenhuma escola perto de você</p>
+            </ion-item>
+            <ion-item ng-repeat="i in schools track by i.id" ng-if="i.inspections.length == 0" ng-href="#/school/{{i.id}}" class="item item-complex {{i.inspections.length > 0 ? 'photo' : ''}} {{i.bar ? 'headerSchools' : ''}}">
+                <p class="name">{{i.name}}</p>
+                <p class="address">{{i.address}}</p>
+                <p ng-if="i.latitude" class="travel_time"><i class="ion-android-walk" data-pack="default"></i> {{distanceFrom(i.latitude, i.longitude)}}km</p>
+                <p class="info {{i.info}}"><i class="ion-{{i.info}}" data-pack="default"></i> {{i.late | daysToVerbose}} {{i.status}}</p>
+                <p ng-if="!i.address" class="address">&nbsp;</p>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

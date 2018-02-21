@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="360px" height="143px" viewBox="0 0 360 143" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 40.1 (33804) - http://www.bohemiancoding.com/sketch -->
+    <title>608B434D-8EB8-47A8-94B0-58BDBD485451</title>
+    <desc>Created with sketchtool.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="tutorial-screen-01" transform="translate(0.000000, -497.000000)">
+            <g id="patthern-bottom" transform="translate(0.000000, 497.000000)">
+                <rect id="Rectangle" fill="#F5B462" x="0" y="0" width="72" height="72"></rect>
+                <rect id="Rectangle-Copy-10" fill="#F5B462" x="288" y="0" width="72" height="72"></rect>
+                <rect id="Rectangle-Copy-2" fill="#5E9795" x="0" y="72" width="72" height="72"></rect>
+                <polygon id="Rectangle-Copy-5" fill="#86A697" points="144 72 144 144 72 144"></polygon>
+                <polygon id="Rectangle-Copy-8" fill="#86A697" points="288 0 288 72 216 72"></polygon>
+                <polygon id="Rectangle-Copy-6" fill="#F3B363" points="288 72 288 144 216 144"></polygon>
+                <polygon id="Rectangle-Copy-4" fill="#5E9795" points="72 72 144 72 72 144"></polygon>
+                <polygon id="Rectangle-Copy-9" fill="#5E9795" points="216 0 288 0 216 72"></polygon>
+                <polygon id="Rectangle-Copy-7" fill="#D37A53" points="216 72 288 72 216 144"></polygon>
+                <rect id="Rectangle-Copy-3" fill="#5E9795" x="288" y="72" width="72" height="72"></rect>
+                <rect id="Rectangle-Copy" fill="#D27855" x="72" y="0" width="72" height="72"></rect>
+                <circle id="Oval" fill="#D27954" cx="36" cy="36" r="36"></circle>
+                <circle id="Oval-Copy-2" fill="#86A697" cx="36" cy="108" r="36"></circle>
+                <circle id="Oval-Copy-3" fill="#86A697" cx="324" cy="108" r="36"></circle>
+                <path d="M180,36 C199.882251,36 216,19.882251 216,4.63322096e-15 C188.412025,-5.81373022e-14 180,-9.45374507e-14 144,4.63322096e-15 C144,19.882251 160.117749,36 180,36 Z" id="Oval-Copy-4" fill="#5E9795"></path>
+                <circle id="Oval-Copy" fill="#F3B363" cx="108" cy="36" r="36"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

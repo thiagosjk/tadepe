@@ -1,0 +1,84 @@
+<!--
+
+    This file is part of TADEPÉ.
+
+
+    TADEPÉ is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    TADEPÉ is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+
+
+    You should have received a copy of the GNU General Public License
+
+    along with TADEPÉ.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link rel="manifest" href="manifest.json">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/ionic.app.css" rel="stylesheet">
+    <script src="js/all.js"></script>
+    <script src="cordova.js"></script>
+    <script>
+        Raven.config('https://xxxxxxxxxxx@sentry.io/yyyyyyyy')
+             .addPlugin(Raven.Plugins.Angular)
+             .install();
+    </script>
+</head>
+
+<body ng-app="tdp" ng-controller="MainController">
+    <ion-pane>
+        <ion-nav-view></ion-nav-view>
+    </ion-pane>
+    <script id="notification.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-content class="notification">
+                <div class="header">
+                    <a ng-click="closeModal()"><i class="ion-close-round"></i></a>
+                </div>
+                <p class="title">{{translateInstance(notificationData.instance, true)}} {{translateInstance(notificationData.instance)}} respondeu!</p>
+                <p class="date" ng-if="notificationData.date"><span>{{notificationData.date | formatDateOnlyTwo}}</span> é a data informada.</p>
+                <p class="date" ng-if="!notificationData.date"><span class="less">OBRA PARALISADA</span></p>
+                <p class="message"><!-- <img class="quote" src="img/quote.svg" /> -->{{notificationData.text}}</p>
+                <p class="share">
+                    <a class="button button-light" ng-click="share(4, school, null, null, notificationData)">COMPARTILHAR</a>
+                </p>
+                <br>
+                <img class="bottom" src="img/patthern_bottom.svg">
+            </ion-content>
+        </ion-modal-view>
+    </script>
+    <script id="replydetail.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-content class="replydefail">
+                <p class="title"><i class="ion-checkmark-circled"></i> {{replyData.title}}</p>
+                <p class="date">
+                    {{replyData.date}}
+                    <span>é a data informada.</span>
+                </p>
+                <p class="subtitle">Justificativa:</p>
+                <p class="message"><img class="quote" src="img/quote-gray.svg" />{{replyData.text}}</p>
+                <button class="button close" ng-click="closeReplyModal()">FECHAR</button>
+                <button class="button share" ng-click="share(replyData.title + ' ' + replyData.text)">COMPARTILHAR</button>
+                <div class="clear"></div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</body>
+
+</html>

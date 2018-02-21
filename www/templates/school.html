@@ -1,0 +1,126 @@
+<ion-view title="{{school.name}}" class="school">
+    <ion-content>
+        <div class="header">
+            <a class="back" ng-href="#/schools"><i class="ion-android-arrow-back"></i></a>
+        </div>
+        <h1 ng-if="school.name.length > 40">{{school.name | limitTo:40}}...</h1>
+        <h1 ng-if="school.name.length < 41">{{school.name}}</h1>
+        <p ng-if="school.address && school.latitude && school.longitude" class="address" ng-click="openMaps(school.latitude, school.longitude)"><i class="ion-navigate" data-pack="default"></i> <span>{{school.address}}</span></p>
+        <p ng-if="school.address && !(school.latitude && school.longitude)" class="address"><i class="ion-navigate" data-pack="default"></i> <span>{{school.address}}</span></p>
+        <p ng-if="school.latitude" class="travel_time"><i class="ion-android-walk" data-pack="default"></i> {{distanceFrom(school.latitude, school.longitude)}}km</p>
+        <div class="clear"></div>
+        <ion-slides class="slides" options="options" slider="data.slider">
+            <ion-slide-page ng-if="school.inspections.length > 1" scroll="false">
+                <div class="card showDetailInspection">
+                    <div class="item changePadding shareSize">
+                        <div class="status answer">
+                            <p class="info information-circled"><i class="ion-search" data-pack="default"></i> SUAS VISTORIAS</p>
+                        </div>
+                    </div>
+                    <div class="item item-text-wrap">
+                        <div class="date">
+                            <p class="big orange">{{school.inspections.length}} ALERTAS</p>
+                            <p class="small orange">enviados por você</p>
+                        </div>
+                        <p class="card-text">É isso aí, continue no pé! Para acompanhar o andamento dos seus alertas, toque neste card e veja em qual etapa eles estão.</p>
+                    </div>
+                </div>
+            </ion-slide-page>
+            <ion-slide-page ng-if="school.inspections.length == 1" ng-repeat="i in school.inspections" scroll="false">
+                <div class="card">
+                    <a class="share" ng-click="share(1, school, i)"><i class="ion-android-share"></i></a>
+                    <div class="item changePadding shareSize">
+                        <ng-include src="'templates/progress.html'"></ng-include>
+                    </div>
+                    <div class="item item-text-wrap" ng-if="i.delayed">
+                        <p class="card-text" ng-if="i.status[2].status == 0">{{i.text}}<br /><br><br></p>
+                        <p class="card-text" ng-if="i.status[2].status > 0">Seu alerta foi avaliado e possui indícios de atraso, já encaminhamos para o governo.<br /><br><br></p>
+                        <p class="info smallText greenText"><i class="ion-android-alert" data-pack="default"></i> Não se preocupe, suas informações estão seguras.</p>
+                    </div>
+                    <div class="item item-text-wrap" ng-if="!i.delayed">
+                        <p class="card-text">Seu alerta foi avaliado e não possui indícios de atraso. Continue de olho!<br /><br><br></p>
+                        <p class="info smallText greenText"><i class="ion-android-alert" data-pack="default"></i> Não se preocupe, suas informações estão seguras.</p>
+                    </div>
+                </div>
+            </ion-slide-page>
+            <ion-slide-page ng-if="school.replies.length > 1" scroll="false">
+                <div class="card showDetailReply">
+                    <div class="item changePadding shareSize">
+                        <div class="status answer">
+                            <p class="info checkmark-circled"><i class="ion-android-checkmark-circle" data-pack="default"></i> RESPOSTAS</p>
+                        </div>
+                    </div>
+                    <div class="item item-text-wrap">
+                        <div class="date">
+                            <p class="big">{{school.replies.length}} ALERTAS</p>
+                            <p class="small">respondidos para essa obra</p>
+                        </div>
+                        <p class="card-text">Essa escola recebeu {{school.replies.length}} respostas, dos {{school.inspections_total}} alertas enviados, ajude a ficar no pé! Toque no card para ver as respostas.</p>
+                    </div>
+                </div>
+            </ion-slide-page>
+            <ion-slide-page ng-if="school.replies.length == 1" ng-repeat="reply in school.replies" scroll="false">
+                <div class="card reply" data-title="{{translateInstance(reply.instance, true)}} {{translateInstance(reply.instance)}} respondeu!" data-text="{{reply.text}}" data-date="{{reply.deadline | deadline}}">
+                    <a class="share" ng-click="share(2, school, null, reply)"><i class="ion-android-share"></i></a>
+                    <div class="item">
+                        <div class="status answer">
+                            <p class="info checkmark-circled"><i class="ion-android-checkmark-circle" data-pack="default"></i> {{translateInstance(reply.instance, true)}} {{translateInstance(reply.instance)}} respondeu!</p>
+                        </div>
+                    </div>
+                    <div class="item item-text-wrap">
+                        <div class="date">
+                            <p class="big" ng-if="reply.deadline > -1">{{reply.deadline | deadline}}</p>
+                            <p class="small" ng-if="reply.deadline > -1">é a nova data informada</p>
+                            <p class="big" ng-if="reply.deadline == -1">OBRA PARALISADA</p>
+                            <p class="small" ng-if="reply.deadline == -1">&nbsp;</p>
+                        </div>
+                        <p class="card-text">{{reply.text | limitTo:130}}</p>
+                        <p class="info smallText greenText grayText"><i class="ion-android-alert" data-pack="default"></i> Resposta recebida em {{reply.replied_on | formatDate}}</p>
+                    </div>
+                </div>
+            </ion-slide-page>
+            <ion-slide-page scroll="false" ng-if="show">
+                <div ng-if="school.late != 0" class="card">
+                    <a class="share" ng-click="share(3, school)"><i class="ion-android-share"></i></a>
+                    <div class="item">
+                        <div class="status answer">
+                            <p class="info android-alert" ng-if="school.status == 'Em Execução'"><i class="ion-android-alert" data-pack="default"></i> EM EXECUÇÃO</p>
+                            <p class="info android-alert" ng-if="school.status != 'Em Execução' && school.late == -1"><i class="ion-alert-circled" data-pack="default"></i> ATENÇÃO</p>
+                            <p class="info android-alert" ng-if="school.status != 'Em Execução' && school.late > 0"><i class="ion-android-alert" data-pack="default"></i> OBRA ATRASADA</p>
+                        </div>
+                    </div>
+                    <div class="item item-text-wrap">
+                        <div class="date">
+                            <p class="big red" ng-if="school.late > 0">{{school.late | daysToVerbose}}</p>
+                            <p class="big red" ng-if="school.late == -1">SEM PREVISÃO</p>
+                            <p class="small red" ng-if="school.late > 0">sem aula</p>
+                            <p class="small red" ng-if="school.late == -1">&nbsp;</p>
+                        </div>
+                        <p class="card-text" ng-if="school.late > 0">De acordo com as informações oficiais, disponíveis no site do SIMEC, a data prevista para o término dessa escola era {{school.deadline | formatDate}}.</p>
+                        <p class="card-text" ng-if="school.late == -1">De acordo com dados oficiais do SIMEC, essa obra não tem previsão para entrega.</p>
+                    </div>
+                </div>
+                <div ng-if="school.late == 0" class="card">
+                    <a class="share" ng-click="share(3, school)"><i class="ion-android-share"></i></a>
+                    <div class="item">
+                        <div class="status answer">
+                            <p class="info {{school.info}} orange"><i class="ion-{{school.info}}" data-pack="default"></i> {{school.title}}</p>
+                        </div>
+                    </div>
+                    <div class="item item-text-wrap">
+                        <div class="date running">
+                            <p class="big">{{school.deadline | toEnd}}</p>
+                            <p class="small">até a entrega da obra</p>
+                        </div>
+                        <p class="card-text">De acordo com as informações oficiais, disponíveis no site do SIMEC, a data prevista para o término dessa escola é {{school.deadline | formatDate}}.</p>
+                    </div>
+                </div>
+            </ion-slide-page>
+        </ion-slides>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+    </ion-content>
+    <a ng-if="school.inspections_total > 0" class="extra-footer-button"><i class="ion-android-people" data-pack="default"></i> {{school.inspections_total}} {{school.inspections_total > 1 ? 'pessoas já vistoriaram' : 'pessoa já vistoriou'}}</a>
+    <a class="button button-full button-assertive footer-button" ng-click="takePhoto()"><i class="ion-camera" data-pack="default"></i> VISTORIAR</a>
+</ion-view>

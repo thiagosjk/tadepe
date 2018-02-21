@@ -1,0 +1,22 @@
+<div ng-if="i.inspections.length > 0" class="progress-bar">
+    <div ng-repeat="s in i.inspections[0].status" class="slot follow {{colors[s.status]}} {{s.instance == 'Alerta' ? 'first_one' : ''}}">
+        <div class="dot"></div>
+        <div class="line"></div>
+        <div class="dotted_line"></div>
+        <span>{{s.instance}}</span>
+    </div>
+    <div class="slot school">
+        <span>{{school.type == 'kindergarten' ? 'Creche' : 'Escola'}}</span>
+    </div>
+</div>
+<div ng-if="!i.inspections" class="progress-bar">
+    <div ng-repeat="s in i.status" class="slot follow {{colors[s.status]}} {{s.instance == 'Alerta' ? 'first_one' : ''}}">
+        <div class="dot"></div>
+        <div class="line"></div>
+        <div class="dotted_line"></div>
+        <span>{{s.instance}}</span>
+    </div>
+    <div class="slot school">
+        <span>{{school.type == 'kindergarten' ? 'Creche' : 'Escola'}}</span>
+    </div>
+</div>

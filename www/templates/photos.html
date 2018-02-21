@@ -1,0 +1,48 @@
+<ion-view title="{{school.name}}" class="photos">
+    <ion-content>
+        <div class="header">
+            <a class="back" ng-click="goBack()"><i class="ion-android-arrow-back"></i></a>
+            <div class="clear"></div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="extra-image-block">
+                    <button class="button button-clear button-stable add" ng-click="takePhoto()">
+                        <i class="ion-plus-circled"></i>
+                    </button>
+                    <scroll direction="x">
+                        <div class="scroll-photos-outer">
+                            <div class="scroll-photos-inner">
+                                <div ng-repeat="p in photos track by $index" class="photo tada animated photo-animated" style="background-image:url(data:image/png;base64,{{p.hash}})" ng-click="viewPhoto($index)"></div>
+                            </div>
+                        </div>
+                    </scroll>
+                </div>
+            </div>
+        </div>
+
+        <h1 style="margin-top: 60px;">Obrigado! {{currentSchool}}</h1>
+        <p class="sub-title" style="text-align: center;">Suas fotos serão enviadas para análise.</p>
+        <div class="list">
+            <label class="item item-input item-floating-label label-comments">
+                <span class="input-label span-comments">Deixe algum comentário sobre a obra</span>
+                <textarea ng-model="inspection.comment" maxlength="140" class="comments" name="comments" rows="2" placeholder="Deixe algum comentário sobre a obra"></textarea>
+            </label>
+        </div>
+        <p class="sub-title">Que tal responder algumas perguntas?</p>
+        <div ng-repeat="c in checks" class="check">
+            <span class="image"><img src="img/{{c.icon}}.svg" /> </span>
+            <span class="text">{{c.text}}</span>
+            <input type="checkbox" class="selectAnswer" name="check_{{$index}}" data-index="{{$index}}" />
+            <div class="clear"></div>
+        </div>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+        <h1>&nbsp;</h1>
+    </ion-content>
+    <a class="button button-full button-assertive footer-button" ng-click="sendPhotos()">
+        <i class="ion-upload" data-pack="default"></i> ENVIAR SEU ALERTA
+    </a>
+</ion-view>

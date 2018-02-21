@@ -1,0 +1,35 @@
+<ion-view class="sent {{school.late != -1 ? color : 'yellow'}}">
+    <ion-content>
+        <p class="header offline" ng-if="!onLine">
+            <i class="ion-wifi"></i> Enviaremos quando você estiver on-line.
+        </p>
+        <p class="header online" ng-if="onLine && !isSendindInspections">
+            <i class="ion-android-checkmark-circle"></i> Alerta enviado. Obrigado!
+        </p>
+        <p class="header online" ng-if="onLine && isSendindInspections">
+            <i class="ion-android-checkmark-circle"></i> Enviando alerta...
+        </p>
+        <a ng-if="!isSendindInspections" class="share" ng-click="share(3, school)"><i class="ion-android-share"></i></a>
+        <p class="sub-title" ng-if="!isSendindInspections">
+            <span ng-if="!onLine">Tudo pronto. Seu alerta foi registrado e será enviado para os nossos engenheiros assim que você estiver conectado à internet.</span>
+            <span ng-if="onLine">Seu alerta foi enviado para nossos engenheiros. Se eles encontrarem sinais de atraso, falaremos com o governo.</span>
+            <br />
+            <br />
+            <ng-include src="'templates/progress.html'"></ng-include>
+        </p>
+        <div class="message {{school.late != -1 ? color : 'yellow'}}">
+            <p class="icon">
+                <img src="img/{{icon}}-white.svg" ng-if="late <= 0">
+                <i class="ion-android-alert" ng-if="late > 0 && school.late != -1"></i>
+                <i class="ion-alert-circled" ng-if="late > 0 && school.late == -1"></i>
+            </p>
+            <p class="text" ng-if="school.late != -1">{{text}}<br><br></p>
+            <p class="text" ng-if="school.late == -1">Esta obra está sem previsão de entrega! #Fiquenope e traga mais gente!<br><br></p>
+            <div class="clear"></div>
+        </div>
+    </ion-content>
+    <div class="floater {{school.late != -1 ? color : 'yellow'}}">
+        <p class="info"><i class="ion-information-circled"></i> Não se preocupe, suas informações estão seguras.</p>
+        <a class="button button-light" ng-href="#/school/{{school.id}}">FECHAR</a>
+    </div>
+</ion-view>
